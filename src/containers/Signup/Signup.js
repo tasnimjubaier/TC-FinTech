@@ -4,9 +4,8 @@ import axios from 'axios'
 import FluidInput from '../../components/FuildInput/FluidInput'
 import Button from '../../components/Button/Button'
 import { useNavigate } from 'react-router-dom'
-// import { Store } from '../../Store/Store'
 
-const Signup = () => {
+const Signup = ({setToken}) => {
   const [inputs, setInputs] = useState({})
   let Navigate = useNavigate()
   console.log('inside fucking signup')
@@ -21,8 +20,8 @@ const Signup = () => {
     const user = {name : inputs.name, email : inputs.email, password : inputs.password}
     // axios.post("http://localhost:6969/Register",user )
     //     .then(res=>console.log(res))
-    // Store.actions.save({name : user.name})
-    console.log(user)
+    setToken({name : user.name})
+    localStorage.setItem('user', JSON.stringify({name : user.name}))
     Navigate('/')
   }
 

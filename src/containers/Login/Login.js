@@ -3,11 +3,10 @@ import {Link, useNavigate} from 'react-router-dom'
 import axios from 'axios'
 import FluidInput from '../../components/FuildInput/FluidInput'
 import Button from '../../components/Button/Button'
-// import { Store } from '../../Store/Store'
 
-const Login = () => {
+const Login = ({setToken}) => {
   const [inputs, setInputs] = useState({})
-  const Navigate = useNavigate()
+  let Navigate = useNavigate()
 
   const handleChange = (e) => {
     setInputs({...inputs , [e.target.name] : e.target.value})
@@ -20,7 +19,8 @@ const Login = () => {
     //   .then(res => {
     //       alert(res.data.message)
     //   })
-    // Store.actions.save({name : user.name})
+    setToken({name : user.name})
+    localStorage.setItem('user', JSON.stringify({name : user.name}))
     Navigate('/')
   }
 

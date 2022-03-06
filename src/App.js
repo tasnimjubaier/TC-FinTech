@@ -1,36 +1,31 @@
 import React, { useState } from 'react'
 import { BrowserRouter as Router, Route, Routes, Navigate, Link } from 'react-router-dom';
-// import { Provider } from 'react-global-hook';
-import useGlobal from 'use-global-hook';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Dashboard from './containers/Dashboard/Dashboard';
 import Login from './containers/Login/Login';
 import Signup from './containers/Signup/Signup'
 import Navbar from './containers/Navbar/Navbar';
-// import { Store } from './Store/Store';
-
+import Test from './containers/Test/Test';
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem('user'))
-  const [globalState, globalActions] = useGlobal();
 
   console.log('inside fucking app')
 
   return (
-    // <Provider store={Store}>
-      <div className="App">
+    <div className="App">
       <Router>
         {/* <Navbar/> */}
         <Routes>
-          <Route exact path="/" element = { token ? <Dashboard /> : <Signup setToken={setToken}/> } />
+          <Route exact path="/" element = { token !== null ? <Dashboard /> : <Signup setToken={setToken}/> } />
           <Route path="/Login" element = {<Login setToken={setToken}/>} />
           <Route path="/Signup" element = {<Signup setToken={setToken}/>} />
+          <Route path='/test' element = { <Test /> } />
           <Route path='*' element={ <Navigate to="/" /> }/>
         </Routes>
       </Router>
-     </div>
-    // </Provider>
+    </div>
   )
 }
 

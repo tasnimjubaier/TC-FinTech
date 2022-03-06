@@ -6,8 +6,8 @@ const initialState = {
   
 const actions = {
     save: (store, token) => {
-        localStorage.setItem('user', token)
-        store.setState({ token : token });
+        localStorage.setItem('user', JSON.stringify(token))
+        store.setState({ token : JSON.stringify(token) });
     },
     delete: (store) => {
         localStorage.removeItem('user')
