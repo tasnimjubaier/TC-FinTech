@@ -6,7 +6,10 @@ import CustomerList from '../../components/CustomerList/CustomerList';
 
 const Dashboard = () => { 
   return (
-    <CustomerList />
+    <>
+      <Sidebar />
+      {/* <CustomerList /> */}
+    </>
   )
 }
 

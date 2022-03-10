@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import './Sidebar.scss';
-import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
-import 'react-pro-sidebar/dist/css/styles.css';
-import { FaGem, FaHeart } from "react-icons/fa";
+import { CSidebar, CSidebarBrand, CSidebarFooter, CSidebarHeader, CSidebarNav, CNavTitle, CNavItem,
+    CBadge,  CNavGroup,  CSidebarToggler } from '@coreui/react'
+import CIcon from '@coreui/icons-react'
+import { cilPuzzle, cilSpeedometer } from '@coreui/icons'
 
 const sidebarNavItems = [
     {
@@ -28,25 +29,30 @@ const Sidebar = () => {
 
     return (
         <>
-            <ProSidebar style={{marginTop : 100, height : 400}}>
-                <Menu iconShape='square'>
-                    {
-                        sidebarNavItems.map( item => {
-                            console.log(item.display)
-                            return (
-                                <MenuItem icon={ <FaGem/>}  key={item.id}
-                                    onClick={() => { 
-                                        item.active = !item.active 
-                                        console.log(item.active)
-                                        setActiveIndex(item.id)
-                                    }}>
-                                    {item.display}
-                                </MenuItem>
-                            )
-                        })
-                    }
-                </Menu>
-            </ProSidebar>
+            <CSidebar colorScheme="light" narrow={true} onHide>
+                <CSidebarBrand>Sidebar Brand</CSidebarBrand>
+                <CSidebarNav>
+                    <CNavTitle>Nav Title</CNavTitle>
+                    <CNavItem href="#">
+                    <CIcon customClassName="nav-icon" icon={cilSpeedometer} />
+                    Nav item
+                    </CNavItem>
+                    <CNavItem href="#">
+                    <CIcon customClassName="nav-icon" icon={cilSpeedometer} />
+                    With badge
+                    <CBadge color="primary ms-auto">NEW</CBadge>
+                    </CNavItem>
+                    <CNavGroup toggler="Nav dropdown">
+                    <CNavItem href="#">
+                        <CIcon customClassName="nav-icon" icon={cilPuzzle} /> Nav dropdown item
+                    </CNavItem>
+                    <CNavItem href="#">
+                        <CIcon customClassName="nav-icon" icon={cilPuzzle} /> Nav dropdown item
+                    </CNavItem>
+                    </CNavGroup>
+                </CSidebarNav>
+                <CSidebarToggler />
+            </CSidebar>
         </>
     )
 };
