@@ -21,9 +21,10 @@ const CustomerList = () => {
     }, []);
 
     return (
-        <div>
+        <div className='customerList'>
+        <Divider/>
             <CustomerCard name={'blabla'} email={'blabla'} status={'pending'} />
-            <Divider />
+            <Divider/>
             <CustomerCard name={'blabla'} email={'blabla'} status={'pending'} />
             <Divider />
             <CustomerCard name={'blabla'} email={'blabla'} status={'pending'} />
@@ -31,9 +32,13 @@ const CustomerList = () => {
             <CustomerCard name={'blabla'} email={'blabla'} status={'pending'} />
             <Divider />
             <CustomerCard name={'blabla'} email={'blabla'} status={'blablabla'} />
+            <Divider/>
             <CustomerCard name={'blabla'} email={'blabla'} status={'blablabla'} />
+            <Divider/>
             <CustomerCard name={'blabla'} email={'blabla'} status={'blablabla'} />
+            <Divider/>
             <CustomerCard name={'blabla'} email={'blabla'} status={'blablabla'} />
+            <Divider/>
             {
                 customers.map(customer => (
                     <CustomerCard image={customer.image} name={customer.name} email={customer.email} status={customer.status} />

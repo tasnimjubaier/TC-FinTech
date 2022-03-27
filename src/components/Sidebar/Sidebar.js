@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import './Sidebar.scss';
-import { CSidebar, CSidebarBrand, CSidebarFooter, CSidebarHeader, CSidebarNav, CNavTitle, CNavItem,
-    CBadge,  CNavGroup,  CSidebarToggler } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import { cilPuzzle, cilSpeedometer } from '@coreui/icons'
+import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
+import Paragraph from '../../Utils/Paragraph';
 
 const sidebarNavItems = [
     {
@@ -26,35 +24,25 @@ const sidebarNavItems = [
 
 const Sidebar = () => {
     const [activeIndex, setActiveIndex] = useState(0);
-
+const test = false;
     return (
-        <>
-            <CSidebar colorScheme="light" narrow={true} onHide>
-                <CSidebarBrand>Sidebar Brand</CSidebarBrand>
-                <CSidebarNav>
-                    <CNavTitle>Nav Title</CNavTitle>
-                    <CNavItem href="#">
-                    <CIcon customClassName="nav-icon" icon={cilSpeedometer} />
-                    Nav item
-                    </CNavItem>
-                    <CNavItem href="#">
-                    <CIcon customClassName="nav-icon" icon={cilSpeedometer} />
-                    With badge
-                    <CBadge color="primary ms-auto">NEW</CBadge>
-                    </CNavItem>
-                    <CNavGroup toggler="Nav dropdown">
-                    <CNavItem href="#">
-                        <CIcon customClassName="nav-icon" icon={cilPuzzle} /> Nav dropdown item
-                    </CNavItem>
-                    <CNavItem href="#">
-                        <CIcon customClassName="nav-icon" icon={cilPuzzle} /> Nav dropdown item
-                    </CNavItem>
-                    </CNavGroup>
-                </CSidebarNav>
-                <CSidebarToggler />
-            </CSidebar>
-        </>
+        <div className='Sidebar'>
+            {test &&
+                <div className='boxsize'>
+                    {Paragraph.paragraphOne}
+                </div>
+            }
+            <ProSidebar
+            collapsed={false}
+            toggled={true}
+            breakPoint="md"
+            >
+                <Menu iconShape="circle">
+                    <MenuItem suffix={<span className="badge red"></span>}>helo world</MenuItem>
+                    <MenuItem> halo world </MenuItem>
+                </Menu>
+            </ProSidebar>
+        </div>
     )
 };
-
 export default Sidebar;

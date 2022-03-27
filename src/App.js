@@ -11,7 +11,7 @@ import Test from './containers/Test/Test';
 function App() {
   const [token, setToken] = useState(localStorage.getItem('user'))
 
-  console.log('inside fucking app')
+  console.log('inside app')
 
   return (
     <div className="App">
