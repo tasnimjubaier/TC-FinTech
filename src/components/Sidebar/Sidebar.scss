@@ -1,4 +1,4 @@
-$sidebar-width: 10vw !default;
+$sidebar-width: 15vw !default;
 $sidebar-collapsed-width: 80px !default;
 $submenu-indent: 24px !default;
 $breakpoint-xs: 480px !default;
@@ -27,6 +27,24 @@ body {
     height: 100vh;
     display: inline-block;
     position: relative;
+    font-size: large;
+    .sidebarHeader{
+        padding: 24px;
+        padding-left: 4vw;
+        font-weight: bold;
+        font-size: 20;
+        align-content: center;
+        letter-spacing: 9px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .sidebarContent{
+        margin-top: 2vh;
+    }
+    .sidebarFooter{
+        padding: 28px;
+    }
 }
 
 .boxsize{

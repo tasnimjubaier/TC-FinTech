@@ -10,8 +10,7 @@ import StyledButton from '../StyledButton/StyledButton';
 
 const CustomerList = () => {
     const [customers, setCustomers] = useState([])
-    const [file, selectFile] = useFileUpload()
-
+    
     useEffect(() => {
         
         // fetch customer list from db 
@@ -22,7 +21,7 @@ const CustomerList = () => {
 
     return (
         <div className='customerList'>
-        <Divider/>
+            <Divider/>
             <CustomerCard name={'blabla'} email={'blabla'} status={'pending'} />
             <Divider/>
             <CustomerCard name={'blabla'} email={'blabla'} status={'pending'} />
@@ -44,34 +43,6 @@ const CustomerList = () => {
                     <CustomerCard image={customer.image} name={customer.name} email={customer.email} status={customer.status} />
                 ))
             }
-            <FormControl>
-                {/* <InputLabel htmlFor="component-outlined"></InputLabel> */}
-                <InputField
-                    id="component-outlined"
-                    label="Name"
-                />
-            </FormControl>
-            <StyledButton text={'Generate Link'} />
-            <div>
-                <button
-                    onClick={() => {
-                    // Single File Upload
-                    selectFile()
-                    }}
-                >
-                    Click to Upload
-                </button>
-
-                {file ? (
-                    <div>
-                    <img src={file.source} alt='preview' />
-                    <span> Name: {file.name} </span>
-                    <span> Size: {file.size} </span>
-                    </div>
-                ) : (
-                    <span>No file selected</span>
-                )}
-            </div>
         </div>
     )
 }

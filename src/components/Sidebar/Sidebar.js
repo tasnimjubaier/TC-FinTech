@@ -1,7 +1,13 @@
 import { useState } from 'react';
 import './Sidebar.scss';
-import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
+import { ProSidebar, Menu, MenuItem, SubMenu,
+    SidebarHeader,
+    SidebarFooter,
+    SidebarContent } from 'react-pro-sidebar';
 import Paragraph from '../../Utils/Paragraph';
+import PeopleAltTwoToneIcon from '@mui/icons-material/PeopleAltTwoTone';
+import DoubleArrowTwoToneIcon from '@mui/icons-material/DoubleArrowTwoTone';
+import { Chip, Divider } from '@mui/material';
 
 const sidebarNavItems = [
     {
@@ -33,14 +39,22 @@ const test = false;
                 </div>
             }
             <ProSidebar
-            collapsed={false}
-            toggled={true}
-            breakPoint="md"
-            >
-                <Menu iconShape="circle">
-                    <MenuItem suffix={<span className="badge red"></span>}>helo world</MenuItem>
-                    <MenuItem> halo world </MenuItem>
-                </Menu>
+                collapsed={false}
+                toggled={true}
+                breakPoint="md">
+                    <SidebarHeader className='sidebarHeader'>
+                        FinTech
+                    </SidebarHeader>
+                    <SidebarContent className='sidebarContent'>
+                        <Menu iconShape="circle">
+                            <MenuItem icon={<PeopleAltTwoToneIcon/>} suffix={<span className="badge red"></span>}>Customers List</MenuItem>
+                            <Divider />
+                            <MenuItem icon={<DoubleArrowTwoToneIcon/>}> Onboard Customer </MenuItem>
+                            <Divider />
+                        </Menu>
+                    </SidebarContent>
+
+                    <SidebarFooter className='sidebarFooter'> </SidebarFooter>
             </ProSidebar>
         </div>
     )
