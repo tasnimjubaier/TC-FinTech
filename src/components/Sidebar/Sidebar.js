@@ -1,36 +1,62 @@
 import { useState } from 'react';
 import './Sidebar.scss';
-import { ProSidebar, Menu, MenuItem, SubMenu,
+import { ProSidebar, Menu, MenuItem,
     SidebarHeader,
     SidebarFooter,
     SidebarContent } from 'react-pro-sidebar';
+import { useNavigate } from 'react-router-dom'
 import Paragraph from '../../Utils/Paragraph';
 import PeopleAltTwoToneIcon from '@mui/icons-material/PeopleAltTwoTone';
 import DoubleArrowTwoToneIcon from '@mui/icons-material/DoubleArrowTwoTone';
+import DashboardCustomizeTwoToneIcon from '@mui/icons-material/DashboardCustomizeTwoTone';
 import { Chip, Divider } from '@mui/material';
 
-const sidebarNavItems = [
-    {
-        display: 'Customers List',
-        icon: <i className='bx bx-home'></i>,
-        active: false,
-        to: '/',
-        id: 0,
-        section: ''
-    },
-    {
-        display: 'Onboard Customer',
-        icon: <i className='bx bx-star'></i>,
-        active: false,
-        to: '/started',
-        id: 1,
-        section: 'started'
-    }
-]
 
-const Sidebar = () => {
-    const [activeIndex, setActiveIndex] = useState(0);
-const test = false;
+export const CustomerProfileSidebar = () => {
+
+    const navigate = useNavigate()
+    
+    return (
+        <div className='Sidebar'>
+            <ProSidebar
+                collapsed={false}
+                toggled={true}
+                breakPoint="md">
+                    <SidebarHeader className='sidebarHeader'>
+                        FinTech
+                    </SidebarHeader>
+                    <SidebarContent className='sidebarContent'>
+                        <Menu iconShape="circle">
+                            <MenuItem icon={<DashboardCustomizeTwoToneIcon/>} active={false} onClick={() => navigate('/')}>DashBoard</MenuItem>
+                            <Divider />
+                        </Menu>
+                    </SidebarContent>
+
+                    <SidebarFooter className='sidebarFooter'> </SidebarFooter>
+            </ProSidebar>
+        </div>
+    )
+}
+
+const Sidebar = ({onToggle}) => {
+    const [customerListActive, setCustomerListActive] = useState(true)
+    const [onboardCustomerActive, setOnboardCustomerActive] = useState(false)
+    const test = false;
+
+    const toggleActive = (str) => {
+        if(str == 'onboard'){
+            setCustomerListActive(false)
+            setOnboardCustomerActive(true)
+            onToggle(false)
+        }
+        else {
+            setCustomerListActive(true)
+            setOnboardCustomerActive(false)
+            onToggle(true)
+        }
+        console.log(customerListActive)
+    }
+
     return (
         <div className='Sidebar'>
             {test &&
@@ -47,9 +73,9 @@ const test = false;
                     </SidebarHeader>
                     <SidebarContent className='sidebarContent'>
                         <Menu iconShape="circle">
-                            <MenuItem icon={<PeopleAltTwoToneIcon/>} suffix={<span className="badge red"></span>}>Customers List</MenuItem>
+                            <MenuItem icon={<PeopleAltTwoToneIcon/>} active={customerListActive} onClick={() => toggleActive('list')} suffix={<span className="badge red"></span>}>Customers List</MenuItem>
                             <Divider />
-                            <MenuItem icon={<DoubleArrowTwoToneIcon/>}> Onboard Customer </MenuItem>
+                            <MenuItem icon={<DoubleArrowTwoToneIcon/>} active={onboardCustomerActive} onClick={() => toggleActive('onboard')}> Onboard Customer </MenuItem>
                             <Divider />
                         </Menu>
                     </SidebarContent>
@@ -58,5 +84,5 @@ const test = false;
             </ProSidebar>
         </div>
     )
-};
-export default Sidebar;
+}
+export default Sidebar

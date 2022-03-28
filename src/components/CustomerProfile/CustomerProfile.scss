@@ -1,0 +1,49 @@
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+/* Track */
+::-webkit-scrollbar-track {
+background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+background: #888;
+border-radius: 50px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+background: #555;
+}
+::-webkit-scrollbar{
+    display: none;
+}
+
+.customerProfile{
+    height: 100vh;
+    .profile{
+        display: inline-block;
+        position: absolute;
+        width: 50vw;
+        height: 100vh;
+        background-color: white;
+        margin: 0 19vw 0 16vw;
+        padding: 40px;
+        overflow-y: scroll;
+        .title{
+            // margin: 5vh 10vw 3vh 10vw;
+            padding: 0 20vw 0 0;
+        }
+        .profilePhoto, .name, .country, .dob{
+            display: flex;
+        }
+        .buttonGroup{
+            display: flex;
+            flex-direction: row;
+            margin: 10vh 10vw 0 10vw;
+            justify-content: space-around;
+        }
+    }
+}

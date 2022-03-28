@@ -1,6 +1,33 @@
+
 .onboardForm{
     display: inline-block;
-    width: 70vw;
-    margin: 10vw;
     position: absolute;
+    width: 85vw;
+    height: 100vh;
+    background-color: aliceblue;
+    
+    .wrapper{
+        height: 100%;
+        width: 50%;
+        margin: 0 17vw 0 18vw;
+        background-color: white;
+        padding: 40px;
+        overflow-y: scroll;
+        justify-content: center;
+        .container{
+            width: 80%;
+            margin: 20vh 10% 10vh 10%;
+            padding: 20% 8% 15% 8%;
+            border-radius: 1.5%;
+            box-sizing: border-box;
+            box-shadow: 50px;
+            background-color: whitesmoke;
+            .successMessage{
+                margin-top: 5vh;
+            }
+            .success{
+                visibility: collapse;
+            }
+        }
+    }
 }

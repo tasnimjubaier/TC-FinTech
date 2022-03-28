@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import { BrowserRouter as Router, Route, Routes, Navigate, Link } from 'react-router-dom';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
+import './App.scss';
 import Dashboard from './containers/Dashboard/Dashboard';
 import Login from './containers/Login/Login';
 import Signup from './containers/Signup/Signup'
 import Navbar from './containers/Navbar/Navbar';
 import Test from './containers/Test/Test';
+import CustomerProfile from './components/CustomerProfile/CustomerProfile';
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem('user'))
@@ -22,6 +23,7 @@ function App() {
           <Route path="/Login" element = {<Login setToken={setToken}/>} />
           <Route path="/Signup" element = {<Signup setToken={setToken}/>} />
           <Route path='/test' element = { <Test /> } />
+          <Route path='/CustomerProfile' element = { <CustomerProfile />} />
           <Route path='*' element={ <Navigate to="/" /> }/>
         </Routes>
       </Router>
