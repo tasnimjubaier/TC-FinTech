@@ -8,6 +8,7 @@ import Signup from './containers/Signup/Signup'
 import Navbar from './containers/Navbar/Navbar';
 import Test from './containers/Test/Test';
 import CustomerProfile from './components/CustomerProfile/CustomerProfile';
+import CustomerForm from './containers/CustomerForm/CustomerForm';
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem('user'))
@@ -24,6 +25,7 @@ function App() {
           <Route path="/Signup" element = {<Signup setToken={setToken}/>} />
           <Route path='/test' element = { <Test /> } />
           <Route path='/CustomerProfile' element = { <CustomerProfile />} />
+          <Route path='/CustomerForm' element = { <CustomerForm />} />
           <Route path='*' element={ <Navigate to="/" /> }/>
         </Routes>
       </Router>
