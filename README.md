@@ -30,10 +30,3 @@ https://cloud.google.com/vision/?utm_source=google&utm_medium=cpc&utm_campaign=j
 
 # react-pro-sidebar
 https://www.npmjs.com/package/react-pro-sidebar
-
-
-# rapidAPI for OCR
-https://rapidapi.com/microsoft-azure-org-microsoft-cognitive-services/api/microsoft-computer-vision3/
-
-# firebase firestore
-https://console.firebase.google.com/project/tc-fintech/firestore/data/~2F

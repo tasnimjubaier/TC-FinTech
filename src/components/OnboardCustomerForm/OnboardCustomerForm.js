@@ -10,11 +10,8 @@ import StyledButton from '../StyledButton/StyledButton';
 import { Button, Form } from 'react-bootstrap';
 import {MDCTextField} from '@material/textfield';
 import TextField from '@mui/material/TextField';
-import mailSender, {getBody} from '../../service/MailSender';
+import mailSender, {getBody} from '../../service/sendEmail';
 import AnimatedText from 'react-animated-text-content';
-import compareFaces, {detectFace} from '../../service/FaceCompareHelper';
-
-
 
 const OnboardCustomerForm = () => {
     // const [file, selectFile] = useFileUpload()
@@ -23,10 +20,6 @@ const OnboardCustomerForm = () => {
     const [showSuccess, setShowSuccess] = useState(false)
     const emailSubject = "Fintech Customer Onboarding"
     
-
-    detectFace()
-
-
     const generateLink = () => {
         // todo
         return "localhost:3006/CustomerForm"
