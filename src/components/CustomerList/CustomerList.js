@@ -8,111 +8,33 @@ import InputField from '../InputField/InputField';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import StyledButton from '../StyledButton/StyledButton';
+import Customers from '../../service/customers';
 
 const CustomerList = () => {
-    const [customers, setCustomers] = useState([])
+    const [customers, setCustomers] = useState(Customers)
     const navigate = useNavigate()
     const user = { name : "buggy the clown", photo : "this is a photo", country : "wano", dob : '1789'}
 
-    const handleClick = (user) => {
-        navigate('/CustomerProfile', {state : user})
+    const handleClick = (id) => {
+        navigate('/CustomerProfile', {state : id})
     }
+    const handleStatusChange = (id) => {
 
-    useEffect(() => {
-        // fetch customer list from db 
-
-        return () => {
-        }
-    }, []);
+    }
 
     return (
         <div className='customerList'>
             <CustomerCardHeader />
             <Divider/>
-            <CustomerCard name={'blaasd;lfkja;slafkjsdlfjslasldfsldafklsdfbla'} email={'blasdfsadfsadfsdafsdfsdaasfdasfsdafabla'} status={'pendiasdfsadfsafsafsdfsdfafsadfsdfsdaffdsng'} />
-            <Divider/>
-            <CustomerCard name={'blabla'} email={'blabla'} status={'pending'} onClick={() => handleClick(user)} />
-            <Divider />
-            <CustomerCard name={'blabla'} email={'blabla'} status={'pending'} />
-            <Divider />
-            <CustomerCard name={'blabla'} email={'blabla'} status={'pending'} />
-            <Divider />
-            <CustomerCard name={'blabla'} email={'blabla'} status={'blablabla'} />
-            <Divider/>
-            <CustomerCard name={'blabla'} email={'blabla'} status={'blablabla'} />
-            <Divider/>
-            <CustomerCard name={'blabla'} email={'blabla'} status={'blablabla'} />
-            <Divider/>
-            <CustomerCard name={'blabla'} email={'blabla'} status={'blablabla'} />
-            <Divider/>
-            <CustomerCard name={'blabla'} email={'blabla'} status={'pending'} />
-            <Divider/>
-            <CustomerCard name={'blabla'} email={'blabla'} status={'pending'} />
-            <Divider />
-            <CustomerCard name={'blabla'} email={'blabla'} status={'pending'} />
-            <Divider />
-            <CustomerCard name={'blabla'} email={'blabla'} status={'pending'} />
-            <Divider />
-            <CustomerCard name={'blabla'} email={'blabla'} status={'blablabla'} />
-            <Divider/>
-            <CustomerCard name={'blabla'} email={'blabla'} status={'blablabla'} />
-            <Divider/>
-            <CustomerCard name={'blabla'} email={'blabla'} status={'blablabla'} />
-            <Divider/>
-            <CustomerCard name={'blabla'} email={'blabla'} status={'blablabla'} />
-            <Divider/>
-            <CustomerCard name={'blabla'} email={'blabla'} status={'pending'} />
-            <Divider/>
-            <CustomerCard name={'blabla'} email={'blabla'} status={'pending'} />
-            <Divider />
-            <CustomerCard name={'blabla'} email={'blabla'} status={'pending'} />
-            <Divider />
-            <CustomerCard name={'blabla'} email={'blabla'} status={'pending'} />
-            <Divider />
-            <CustomerCard name={'blabla'} email={'blabla'} status={'blablabla'} />
-            <Divider/>
-            <CustomerCard name={'blabla'} email={'blabla'} status={'blablabla'} />
-            <Divider/>
-            <CustomerCard name={'blabla'} email={'blabla'} status={'blablabla'} />
-            <Divider/>
-            <CustomerCard name={'blabla'} email={'blabla'} status={'blablabla'} />
-            <Divider/>
-            <CustomerCard name={'blabla'} email={'blabla'} status={'pending'} />
-            <Divider/>
-            <CustomerCard name={'blabla'} email={'blabla'} status={'pending'} />
-            <Divider />
-            <CustomerCard name={'blabla'} email={'blabla'} status={'pending'} />
-            <Divider />
-            <CustomerCard name={'blabla'} email={'blabla'} status={'pending'} />
-            <Divider />
-            <CustomerCard name={'blabla'} email={'blabla'} status={'blablabla'} />
-            <Divider/>
-            <CustomerCard name={'blabla'} email={'blabla'} status={'blablabla'} />
-            <Divider/>
-            <CustomerCard name={'blabla'} email={'blabla'} status={'blablabla'} />
-            <Divider/>
-            <CustomerCard name={'blabla'} email={'blabla'} status={'blablabla'} />
-            <Divider/>
-            <CustomerCard name={'blabla'} email={'blabla'} status={'pending'} />
-            <Divider/>
-            <CustomerCard name={'blabla'} email={'blabla'} status={'pending'} />
-            <Divider />
-            <CustomerCard name={'blabla'} email={'blabla'} status={'pending'} />
-            <Divider />
-            <CustomerCard name={'blabla'} email={'blabla'} status={'pending'} />
-            <Divider />
-            <CustomerCard name={'blabla'} email={'blabla'} status={'blablabla'} />
-            <Divider/>
-            <CustomerCard name={'blabla'} email={'blabla'} status={'blablabla'} />
-            <Divider/>
-            <CustomerCard name={'blabla'} email={'blabla'} status={'blablabla'} />
-            <Divider/>
-            <CustomerCard name={'blabla'} email={'blabla'} status={'blablabla'} />
-            <Divider/>
             {
-                customers.map(customer => (
-                    <CustomerCard image={customer.image} name={customer.name} email={customer.email} status={customer.status} />
-                ))
+                customers.map(customer => {
+                    return <div key={customer.id}>
+                        <CustomerCard customer={customer} 
+                                    onClick={() => handleClick(customer.id)}
+                                    onStatusChange={() => handleStatusChange(customer.id)} />
+                        <Divider />
+                    </div>
+                })
             }
         </div>
     )

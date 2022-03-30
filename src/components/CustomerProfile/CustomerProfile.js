@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import './CustomerProfile.scss'
 import { useLocation } from 'react-router-dom'
 import { CustomerProfileSidebar } from '../Sidebar/Sidebar'
@@ -10,6 +10,9 @@ import { FilledInput } from '@mui/material';
 import StyledButton from '../StyledButton/StyledButton'
 import ReactRoundedImage from "react-rounded-image";
 import RDJ from '../../assets/images/rdj.jpg'
+import luffy from '../../assets/images/luffy.jpg'
+import Customers from '../../service/customers';
+
 
 const modalStyle = {
     position: 'absolute',
@@ -71,12 +74,18 @@ const ImageFrame = ({image}) => {
 //  passport photo, video
 //  Date of birth, Passport number, Nationality, Country of residence,
 //  Phone number, Address, and occupation.
+// prototype-
+//  {id, name, photo, video, Date of birth, Passport number, Nationality, Country of residence, Phone number, Address, occupation, status}
 
 const CustomerProfile = () => {
     const location = useLocation()
     const [opneOnboard, setOpenOnboard] = useState(false)
     const [openReject, setOpenReject] = useState(false)
     const [status, setStatus] = useState('')
+
+    var customer = {}
+    customer = Customers.filter(cus => cus.id == location.state)[0]
+    console.log(customer)
 
     const onboard = () => {
         console.log('customer onboarded')
@@ -98,26 +107,26 @@ const CustomerProfile = () => {
                     spacing={5} >
                     <Item sx={{height: 200, display: 'flex', flexDirection: 'row', 
                         justifyContent: 'space-around', alignItems: 'center' }}>
-                        <ImageFrame image={RDJ} />
-                        <DataText fontWeight={'bold'} width='55%' title="Name" text="Hordy Jones" />
+                        <ImageFrame image={luffy} />
+                        <DataText fontWeight={'bold'} width='55%' title="Name" text={customer.name} />
                     </Item>
                     <Item sx={{height: 400, display: 'flex', flexDirection: 'column', 
                             justifyContent: 'space-around', alignItems: 'center' }}>
                         <span style={{ width: '100%', display: 'flex', justifyContent: 'space-around' }}>
-                            <DataText fontWeight={'bold'} width='30%' title="Name" text="Hordy Jones" />
-                            <DataText fontWeight={'bold'} width='30%' title="Name" text="Hordy Jones" />
+                            <DataText fontWeight={'bold'} width='30%' title="Date of Birth" text={customer.dob} />
+                            <DataText fontWeight={'bold'} width='30%' title="Passport No" text={customer.passportNo} />
                         </span>
                         <span style={{ width: '100%', display: 'flex', justifyContent: 'space-around' }}>
-                            <DataText fontWeight={'bold'} width='70%' title="Name" text="Hordy Jones" />
-                            <DataText fontWeight={'bold'} width='20%' title="Name" text="Hordy Jones" />
+                            <DataText fontWeight={'bold'} width='70%' title="Nationality" text={customer.nationality} />
+                            <DataText fontWeight={'bold'} width='20%' title="Occupation" text={customer.occupation} />
                         </span>
                         <span style={{ width: '100%', display: 'flex', justifyContent: 'space-around' }}>
-                            <DataText fontWeight={'bold'} width='30%' title="Name" text="Hordy Jones" />
-                            <DataText fontWeight={'bold'} width='50%' title="Name" text="Hordy Jones" />
+                            <DataText fontWeight={'bold'} width='30%' title="Address" text={customer.address} />
+                            <DataText fontWeight={'bold'} width='50%' title="Phone No" text={customer.phone} />
                         </span>
                         <span style={{ width: '100%', display: 'flex', justifyContent: 'space-around' }}>
-                            <DataText fontWeight={'bold'} width='50%' title="Name" text="Hordy Jones" />
-                            <DataText fontWeight={'bold'} width='30%' title="Name" text="Hordy Jones" />
+                            <DataText fontWeight={'bold'} width='50%' title="Name" text="Brook" />
+                            <DataText fontWeight={'bold'} width='30%' title="Name" text="Franky" />
                         </span>
                     </Item>
                     {status=='' &&

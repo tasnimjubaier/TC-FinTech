@@ -2,20 +2,42 @@
 // prototype-
 //  {id, name, photo, video, Date of birth, Passport number, Nationality, Country of residence, Phone number, Address, occupation, status}
 
-const customers = []
+var Customers = [ 
+    {
+        id : 123,
+        name: 'Ronoroa',
+        dob: 2,
+        passportNo: 3,
+        nationality: 4,
+        phone: 5,
+        address: 6,
+        occupation: 7,
+        status: false
+    },
+    {
+        id : 124,
+        name: 'Sanji',
+        dob: 2,
+        passportNo: 3,
+        nationality: 4,
+        phone: 5,
+        address: 6,
+        occupation: 7,
+        status: false
+    }
+ ]
 
-const addCustomer = (customer) => {
-    customers.push(customer)
+export const addCustomer = (customer) => {
+    Customers.push(customer)
 }
 
-const changeStatus = (customer) => {
+export const changeStatus = (customer) => {
     var index = -1;
-    index = customers.findIndex((c => customer.id === c.id))
+    index = Customers.findIndex((c => customer.id === c.id))
     if(index !== -1){
-        customers[index].status = !customers[index].status
+        Customers[index].status = !Customers[index].status
     }
 }
 
 
-
-export default customers
+export default Customers
