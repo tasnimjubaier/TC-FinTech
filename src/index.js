@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {MDCTextField} from '@material/textfield';
 
 ReactDOM.render(
   <React.StrictMode>
