@@ -1,12 +1,15 @@
 import React, {useState, useEffect} from 'react'
 import './CustomerProfile.scss'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { CustomerProfileSidebar } from '../Sidebar/Sidebar'
 import { Button, Divider } from '@mui/material'
 import { Box, Stack, Paper, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { purple, blueGrey } from '@mui/material/colors';
 import { FilledInput } from '@mui/material';
+import ArrowCircleLeftTwoToneIcon from '@mui/icons-material/ArrowCircleLeftTwoTone';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Link from '@mui/material/Link'
 import StyledButton from '../StyledButton/StyledButton'
 import ReactRoundedImage from "react-rounded-image";
 import RDJ from '../../assets/images/rdj.jpg'
@@ -79,6 +82,7 @@ const ImageFrame = ({image}) => {
 
 const CustomerProfile = () => {
     const location = useLocation()
+    const navigate = useNavigate()
     const [opneOnboard, setOpenOnboard] = useState(false)
     const [openReject, setOpenReject] = useState(false)
     const [status, setStatus] = useState('')
@@ -99,7 +103,18 @@ const CustomerProfile = () => {
     return (
         <div className='customerProfile'>
             <CustomerProfileSidebar />
+            
             <div className='profile'>
+                <Breadcrumbs aria-label="breadcrumb">
+                    <Link
+                    underline="hover"
+                    color="inherit"
+                    href="/"
+                    >
+                    Dashboard
+                    </Link>
+                    <Typography color="text.primary">Customer Profile</Typography>
+                </Breadcrumbs>
                 <Stack
                     direction="column"
                     justifyContent="center"
@@ -143,10 +158,13 @@ const CustomerProfile = () => {
                         </Item>
                     }
                     {status!="" && 
-                        <Item sx={{height: 100, fontSize: 20, display: 'flex', flexDirection: 'row', 
-                            justifyContent: 'space-around', alignItems: 'center' }}>
-                                {status}
-                        </Item>
+                        <span>
+                            <Item sx={{height: 190, fontSize: 20, display: 'flex', flexDirection: 'column', 
+                                justifyContent: 'space-evenly', alignItems: 'center' }}>
+                                    {status}
+                            <Button sx={{ width: 300 }} startIcon={<ArrowCircleLeftTwoToneIcon/>} variant="outlined" onClick={() => navigate('/')}>    Dashboard</Button>
+                            </Item>
+                        </span>
                     }
                 </Stack>
             </div>
