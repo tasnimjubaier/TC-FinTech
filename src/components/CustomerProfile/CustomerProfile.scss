@@ -42,8 +42,12 @@ background: #555;
         .buttonGroup{
             display: flex;
             flex-direction: row;
-            margin: 10vh 10vw 0 10vw;
-            justify-content: space-around;
+            margin: 20px 20px;
+            justify-content: space-evenly;
         }
     }
+}
+.text{
+    font-family: 'Saira Condensed', sans-serif, 'Palette Mosaic';
+    // font-weight: 600;
 }

@@ -3,7 +3,6 @@ import { useFileUpload } from 'use-file-upload';
 import './CustomerForm.scss'
 import { Chip, Divider } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
 // import { Button, Form } from 'react-bootstrap';
 import {MDCTextField} from '@material/textfield';
 import TextField from '@mui/material/TextField';
@@ -23,6 +22,11 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { CardActionArea } from '@mui/material';
+import { alpha, styled } from '@mui/material/styles';
+import InputBase from '@mui/material/InputBase';
+import InputLabel from '@mui/material/InputLabel';
+import Customers, {addCustomer} from '../../service/customers';
+
 //  passport photo, video
 //  Date of birth, Passport number, Nationality, Country of residence, Phone number, Address, and occupation.
 
@@ -120,11 +124,69 @@ const VideoComponent = ({setFile}) => {
     )
 }
 
-const InfoComponent = ({file, setFile}) => {
+const InfoComponent = ({userInfo, setUserInfo}) => {
+
+    const BootstrapInput = styled(InputBase)(({ theme }) => ({
+        'label + &': {
+          marginTop: theme.spacing(3),
+        },
+        '& .MuiInputBase-input': {
+          borderRadius: 4,
+          position: 'relative',
+          backgroundColor: theme.palette.mode === 'light' ? '#fcfcfb' : '#2b2b2b',
+          border: '1px solid #ced4da',
+          fontSize: 16,
+          width: 'auto',
+          padding: '10px 12px',
+          transition: theme.transitions.create([
+            'border-color',
+            'background-color',
+            'box-shadow',
+          ]),
+          // Use the system font instead of the default Roboto font.
+          fontFamily: [
+            '-apple-system',
+            'BlinkMacSystemFont',
+            '"Segoe UI"',
+            'Roboto',
+            '"Helvetica Neue"',
+            'Arial',
+            'sans-serif',
+            '"Apple Color Emoji"',
+            '"Segoe UI Emoji"',
+            '"Segoe UI Symbol"',
+          ].join(','),
+          '&:focus': {
+            boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
+            borderColor: theme.palette.primary.main,
+          },
+        },
+      }))
+    
+    const InputElement = ({info, setInfo}) => {
+        return (
+            <Box
+                component="form"
+                noValidate
+                sx={{
+                    display: 'grid',
+                    gridTemplateColumns: { sm: '1fr 1fr' },
+                    gap: 2,
+                }}
+                >
+                <FormControl variant="standard">
+                    <InputLabel shrink htmlFor="bootstrap-input">
+                    Bootstrap
+                    </InputLabel>
+                    <BootstrapInput defaultValue="react-bootstrap" id="bootstrap-input" />
+                </FormControl>
+            </Box>
+        )
+    }
 
     return (
         <div className='infoComponent'>
-            this a info component
+            <InputElement />
         </div>
     )
 }
@@ -228,7 +290,7 @@ const ProgressBar = ({submit, setCurrentStep, infoFilled, fileProvided, setError
 const CustomerForm = () => {
     const [passport, setPassport] = useState(null)
     const [video, setVideo] = useState(null)
-    const [userInfo, setUserInfo] = useState({ dob: "", passportNo: "", nationality: "", country: "", phone: "", address: "", occupation: "", validated: false })
+    const [userInfo, setUserInfo] = useState({ nane: "", dob: "", passportNo: "", nationality: "", country: "", phone: "", address: "", occupation: "", status: false })
 
     const [showSuccess, setShowSuccess] = useState(false)
     const [currentComponent, setCurrentComponent] = useState(0)
@@ -246,6 +308,7 @@ const CustomerForm = () => {
         console.log('form submitted')
         setShowSuccess(true)
         setCurrentComponent(currentComponent + 1)
+        addCustomer({ id : 123, ...userInfo})
     }
     return (
         <div className='customerForm'>
