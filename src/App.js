@@ -9,6 +9,7 @@ import Navbar from './containers/Navbar/Navbar';
 import Test from './containers/Test/Test';
 import CustomerProfile from './components/CustomerProfile/CustomerProfile';
 import CustomerForm from './containers/CustomerForm/CustomerForm';
+import { v4 as uuid } from 'uuid';
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem('user'))
@@ -25,7 +26,7 @@ function App() {
           <Route path="/Signup" element = {<Signup setToken={setToken}/>} />
           <Route path='/test' element = { <Test /> } />
           <Route path='/CustomerProfile' element = { <CustomerProfile />} />
-          <Route path='/CustomerForm' element = { <CustomerForm />} />
+          <Route path='/CustomerForm' element = { <CustomerForm key={uuid()}/>} />
           <Route path='*' element={ <Navigate to="/" /> }/>
         </Routes>
       </Router>

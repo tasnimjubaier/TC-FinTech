@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useReducer} from 'react'
 import { useFileUpload } from 'use-file-upload';
 import './CustomerForm.scss'
-import { Chip, Divider } from '@mui/material';
+import { Chip, Divider, Input, unstable_useId } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 // import { Button, Form } from 'react-bootstrap';
 import {MDCTextField} from '@material/textfield';
@@ -21,17 +21,19 @@ import SendIcon from '@mui/icons-material/Send';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import { CardActionArea } from '@mui/material';
+import { CardActionArea, Stack, Paper, FormHelperText } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import InputLabel from '@mui/material/InputLabel';
 import Customers, {addCustomer} from '../../service/customers';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import { v4 as uuid } from 'uuid';
 
 //  passport photo, video
 //  Date of birth, Passport number, Nationality, Country of residence, Phone number, Address, and occupation.
 
 
-const PassportComponent = ({setFile}) => {
+const PassportComponent = ({passport, setPassport}) => {
     const [file, selectFile] = useFileUpload()
     return (
         <div className='passportComponent'>
@@ -45,7 +47,7 @@ const PassportComponent = ({setFile}) => {
                     <CardActionArea>
                         <CardMedia
                         component="img"
-                        image={file ? file.source : ""}
+                        image={passport ? passport.source : ""}
                         height="100%"
                         width='100%'
                         />
@@ -68,7 +70,7 @@ const PassportComponent = ({setFile}) => {
                             // file - is the raw File Object
                             console.log({ source, name, size, file })
                             
-                            setFile({ source, name, size, file })
+                            setPassport({ source, name, size, file })
                         })
                     }}
                 >
@@ -89,7 +91,7 @@ const PassportComponent = ({setFile}) => {
     )
 }
 
-const VideoComponent = ({setFile}) => {
+const VideoComponent = ({video, setVideo}) => {
     const [file, selectFile] = useFileUpload()
 
     return (
@@ -102,8 +104,8 @@ const VideoComponent = ({setFile}) => {
                 <Typography sx={{margin: "0 0 40px 0"}} variant="body2" gutterBottom component="div">
                     Selected File : 
                     {
-                        file &&
-                        <Typography sx={{margin: "0 0 40px 0", fontSize: 16 }} variant="caption" gutterBottom component="span"> {file.name} </Typography> 
+                        video &&
+                        <Typography sx={{margin: "0 0 40px 0", fontSize: 16 }} variant="caption" gutterBottom component="span"> {video.name} </Typography> 
                     }
                 </Typography>
 
@@ -113,7 +115,7 @@ const VideoComponent = ({setFile}) => {
                         selectFile({ accept: 'video/*' }, ({ source, name, size, file }) => {
                             // file - is the raw File Object
                             console.log({ source, name, size, file })
-                            setFile({ source, name, size, file })
+                            setVideo({ source, name, size, file })
                         })
                     }}
                 >
@@ -124,69 +126,51 @@ const VideoComponent = ({setFile}) => {
     )
 }
 
-const InfoComponent = ({userInfo, setUserInfo}) => {
-
-    const BootstrapInput = styled(InputBase)(({ theme }) => ({
-        'label + &': {
-          marginTop: theme.spacing(3),
-        },
-        '& .MuiInputBase-input': {
-          borderRadius: 4,
-          position: 'relative',
-          backgroundColor: theme.palette.mode === 'light' ? '#fcfcfb' : '#2b2b2b',
-          border: '1px solid #ced4da',
-          fontSize: 16,
-          width: 'auto',
-          padding: '10px 12px',
-          transition: theme.transitions.create([
-            'border-color',
-            'background-color',
-            'box-shadow',
-          ]),
-          // Use the system font instead of the default Roboto font.
-          fontFamily: [
-            '-apple-system',
-            'BlinkMacSystemFont',
-            '"Segoe UI"',
-            'Roboto',
-            '"Helvetica Neue"',
-            'Arial',
-            'sans-serif',
-            '"Apple Color Emoji"',
-            '"Segoe UI Emoji"',
-            '"Segoe UI Symbol"',
-          ].join(','),
-          '&:focus': {
-            boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
-            borderColor: theme.palette.primary.main,
-          },
-        },
-      }))
-    
-    const InputElement = ({info, setInfo}) => {
-        return (
-            <Box
-                component="form"
-                noValidate
-                sx={{
-                    display: 'grid',
-                    gridTemplateColumns: { sm: '1fr 1fr' },
-                    gap: 2,
-                }}
-                >
-                <FormControl variant="standard">
-                    <InputLabel shrink htmlFor="bootstrap-input">
-                    Bootstrap
-                    </InputLabel>
-                    <BootstrapInput defaultValue="react-bootstrap" id="bootstrap-input" />
-                </FormControl>
-            </Box>
-        )
-    }
+const SimpleInput = ({keya, dispatchUser, title, width}) => {
 
     return (
-        <div className='infoComponent'>
-            <InputElement />
+        <span key={uuid()} style={{ display: 'flex', flexDirection: 'column', margin: 30, width: width ? width : '100%' }}>
+            <FormControl key={uuid()}>
+                <InputLabel key={uuid()} htmlFor="my-input">{title}</InputLabel>
+                <Input key={uuid()} id="my-input" aria-describedby="my-helper-text" onChange={(e) => dispatchUser({key : keya, value : e.target.value})}/>
+            </FormControl>
+        </span>
+    )
+}
+
+const InfoComponent = ({userInfo, dispatchUser}) => {
+    
+    const Item = styled(Paper)(({ theme }) => ({
+        backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+        ...theme.typography.body2,
+        padding: theme.spacing(1),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+    }))
+
+    return (
+        <div className='infoComponent' key={uuid()}>
+            <Stack
+                key={uuid()}
+                direction="column"
+                justifyContent="center"
+                alignItems="stretch"
+                sx={{height: 400}}
+                spacing={5} >
+                <Item key={uuid()} sx={{height: 200, display: 'flex', flexDirection: 'column', 
+                    justifyContent: 'space-around', alignItems: 'center' }}>
+                        <span key={uuid()} style={{ width: '100%', display: 'flex', justifyContent: 'space-around' }}>
+                            
+                            <SimpleInput keya='name' dispatchUser={dispatchUser} title="Name" width="150%" />
+                            {/* <SimpleInput inf={userInfo.name} setInf={(v) => dispatchUser({ key : 'name', value : v})} title="Name" width="150%" /> */}
+                            {/* <SimpleInput inf={userInfo.dob} setInf={(v) => dispatchUser({ key : 'dob', value : v})} title="Date of Birth" /> */}
+                        </span>
+                        <span style={{ width: '100%', display: 'flex', justifyContent: 'space-around' }}>
+                            {/* <SimpleInput inf={userInfo.passportNo} setInf={(v) => dispatchUser({ key : 'passportNo', value : v})} title="Passport No" />
+                            <SimpleInput inf={userInfo.nationality} setInf={(v) => dispatchUser({ key : 'nationality', value : v})} title="Nationality" width="40%" /> */}
+                        </span>
+                </Item>
+            </Stack>
         </div>
     )
 }
@@ -233,11 +217,13 @@ const ProgressBar = ({submit, setCurrentStep, infoFilled, fileProvided, setError
             setError(true)
             return
         }
+        setError(false)
         setActiveStep((prevActiveStep) => prevActiveStep + 1)
         setCurrentStep((prevActiveStep) => prevActiveStep + 1)
     }
 
     const handleBack = () => {
+        setError(false)
         setActiveStep((prevActiveStep) => prevActiveStep - 1)
         setCurrentStep((prevActiveStep) => prevActiveStep - 1)
     }
@@ -285,23 +271,55 @@ const ProgressBar = ({submit, setCurrentStep, infoFilled, fileProvided, setError
       )
 }
 
-//  { source: "", file : null, size : "", name : "" }
 
-const CustomerForm = () => {
+//  { source: "", file : null, size : "", name : "" }
+const reduce = (state, action) => {
+    const { key, value } = action
+    switch (key) {
+      case "name":
+        return { ...state, name: value }
+      case "dob":
+        return { ...state, dob: value }
+      case "passportNo":
+        return { ...state, passportNo: value }
+      case "nationality":
+        return { ...state, nationality: value }
+      case "country":
+        return { ...state, country: value }
+      case "phone":
+        return { ...state, phone: value }
+      case "address":
+        return { ...state, address: value }
+      case "occupation":
+        return { ...state, occupation: value }
+      case "status":
+        return { ...state, status: value }
+        deflaut: return state;
+    }
+  }
+const initialState = { name: "", dob: "", passportNo: "", nationality: "", country: "", phone: "", address: "", occupation: "", status: false }
+
+const CustomerForm = ({key}) => {
     const [passport, setPassport] = useState(null)
     const [video, setVideo] = useState(null)
-    const [userInfo, setUserInfo] = useState({ nane: "", dob: "", passportNo: "", nationality: "", country: "", phone: "", address: "", occupation: "", status: false })
+    // const [userInfo, setUserInfo] = useState({ name: "", dob: "", passportNo: "", nationality: "", country: "", phone: "", address: "", occupation: "", status: false })
 
     const [showSuccess, setShowSuccess] = useState(false)
     const [currentComponent, setCurrentComponent] = useState(0)
     const [nextButtonVisible, setNextButtonVisible] = useState(true)
     const [previusButtonVisible, setPreviusButtonVisible] = useState(false)
     const [showError, setShowError] = useState(false)
-    const [progress, setProgress] = useState(0);
+    const [progress, setProgress] = useState("");
+
+    const [userInfo, dispatchUser] = useReducer(reduce, initialState)
 
     useEffect(() => {
         document.title = "Customer Form"
     }, [])
+
+    useEffect(() => {
+        console.log(userInfo)
+    }, [userInfo])
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -310,20 +328,63 @@ const CustomerForm = () => {
         setCurrentComponent(currentComponent + 1)
         addCustomer({ id : 123, ...userInfo})
     }
+    console.log("cusomerform" + key)
+    
+    const Item = styled(Paper)(({ theme }) => ({
+        backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+        ...theme.typography.body2,
+        padding: theme.spacing(1),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+    }))
+
     return (
-        <div className='customerForm'>
-            <div className='wrapper'>
+        <div className='customerForm' key={uuid()}>
+            <div className='wrapper' key={uuid()}>
                 <h1>Boinging</h1>
                 <Divider/>
-
                 <HorizontalStepper currentStep={currentComponent}/>
-
+                <InfoComponent key={uuid()} userInfo={userInfo} dispatchUser={dispatchUser} />
+                <div className='infoComponent'>
+                    <Stack
+                        direction="column"
+                        justifyContent="center"
+                        alignItems="stretch"
+                        sx={{height: 400}}
+                        spacing={5} >
+                        <Item sx={{height: 200, display: 'flex', flexDirection: 'column', 
+                            justifyContent: 'space-around', alignItems: 'center' }}>
+                                <span style={{ width: '100%', display: 'flex', justifyContent: 'space-around' }}>
+                                    
+                                    <span style={{ display: 'flex', flexDirection: 'column', margin: 30, width : '150%' }}>
+                                        <FormControl>
+                                            <InputLabel htmlFor="my-input">Name</InputLabel>
+                                            <Input id="my-input" aria-describedby="my-helper-text" onChange={(e) => dispatchUser({key : 'name', value : e.target.value})}/>
+                                        </FormControl>
+                                    </span>
+                                    <span style={{ display: 'flex', flexDirection: 'column', margin: 30, width : '100%' }}>
+                                        <FormControl>
+                                            <InputLabel htmlFor="my-input">Date of Birth</InputLabel>
+                                            <Input id="my-input" aria-describedby="my-helper-text" onChange={(e) => dispatchUser({key : 'dob', value : e.target.value})}/>
+                                        </FormControl>
+                                    </span>
+                                    {/* <SimpleInput inf={userInfo.name} setInf={(v) => dispatchUser({ key : 'name', value : v})} title="Name" width="150%" /> */}
+                                    {/* <SimpleInput inf={userInfo.dob} setInf={(v) => dispatchUser({ key : 'dob', value : v})} title="Date of Birth" /> */}
+                                </span>
+                                <span style={{ width: '100%', display: 'flex', justifyContent: 'space-around' }}>
+                                    {/* <SimpleInput inf={userInfo.passportNo} setInf={(v) => dispatchUser({ key : 'passportNo', value : v})} title="Passport No" />
+                                    <SimpleInput inf={userInfo.nationality} setInf={(v) => dispatchUser({ key : 'nationality', value : v})} title="Nationality" width="40%" /> */}
+                                </span>
+                        </Item>
+                    </Stack>
+                </div>
                 {
                     currentComponent < 3 && 
                         <>
-                            {currentComponent == 0 && <PassportComponent setFile={setPassport}/> }
-                            {currentComponent == 1 && <VideoComponent setFile={setVideo}/> }
-                            {currentComponent == 2 && <InfoComponent /> }
+                            {/* <InfoComponent userInfo={userInfo} setUserInfo={setUserInfo} /> */}
+                            {/* {currentComponent == 0 && <PassportComponent passport={passport} setPassport={setPassport}/> }
+                            {currentComponent == 1 && <VideoComponent video={video} setVideo={setVideo}/> }
+                            {currentComponent == 2 && <InfoComponent userInfo={userInfo} setUserInfo={setUserInfo} /> } */}
 
                             {showError && 
                                 <div className='error'>
@@ -333,8 +394,8 @@ const CustomerForm = () => {
                                 </div>
                             }
 
-                            <ProgressBar submit={handleSubmit} setCurrentStep={setCurrentComponent} 
-                                infoFilled={ currentComponent == 2 ? userInfo.validated : false}
+                            <ProgressBar key={4} submit={handleSubmit} setCurrentStep={setCurrentComponent} 
+                                infoFilled={ currentComponent == 2 ? userInfo.status : false}
                                 fileProvided={ currentComponent == 0 ? passport != null : (currentComponent == 1 ? video != null : false) }
                                 setError={setShowError}
                                 />
